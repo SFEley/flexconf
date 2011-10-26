@@ -1,5 +1,5 @@
 require "flexconf/version"
 
-module Flexconf
+module FlexConf
   # Your code goes here...
 end
