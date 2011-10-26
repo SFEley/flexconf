@@ -1,5 +1,4 @@
-require "flexconf/version"
-
-module FlexConf
-  # Your code goes here...
+# A simple but flexible configuration class.
+class FlexConf
+  
 end
