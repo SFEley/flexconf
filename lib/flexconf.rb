@@ -147,7 +147,7 @@ class FlexConf
   
   # Turn 'THIS_LONG__ENVIRONMENT__PATH' to [:this_long, :environment, :path]
   def normalize_envvar(name)
-    name.downcase.split('__').map {|e| e.to_sym}
+    name.downcase.split('__').map {|e| e.empty? ? nil : e.to_sym}
   end
   
   def get_path(root, names, create_path=false)

@@ -64,7 +64,6 @@ describe FlexConf do
     
     it "is enumerable" do
       @this.count.should > 0
-      @this.min.should == [:'7', 'seven']
     end
   end
   
@@ -103,7 +102,7 @@ describe FlexConf do
     
     it "complains if given no parameters and there is no config.yml" do
       Dir.chdir('..')
-      ->{FlexConf.new}.should raise_error(ArgumentError, /config\.yml/)
+      lambda {FlexConf.new}.should raise_error(ArgumentError, /config\.yml/)
     end
   end
   
@@ -242,7 +241,7 @@ describe FlexConf do
     end
     
     it "knows nothing about out-of-scope values" do
-      ->{@this.zoo}.should raise_error(NoMethodError)
+      lambda {@this.zoo}.should raise_error(NoMethodError)
     end
     
     it "takes local overrides at the top level" do
