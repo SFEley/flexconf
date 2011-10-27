@@ -1,0 +1,25 @@
+# Overrides
+this_file: 'example/config.yml'
+local_file: 'none'
+
+# Basic key access
+foo: :bar     # Ordinary string key
+7: 'seven'    # Non-string key
+:boo: 'far'   # Symbol key
+
+# Name collisions
+'zoo': 'ostrich'
+:zoo: 'yak'
+
+# Nesting
+nest:
+  foo: 'barbar'
+  joo: 'lepp'
+  renest:
+    bar: 'foofoo'
+
+# Scope
+development:
+  foo: 'dev-fu'
+  boo: 'Chicken Boo'
+  yoo: 'yuh?'
