@@ -4,6 +4,7 @@ require 'forwardable'
 # A simple but flexible configuration class. 
 class FlexConf
   extend Forwardable
+  include Enumerable
   
   # Loads configuration from the supplied source(s).  
   # @overload initialize(hash)
@@ -61,7 +62,7 @@ class FlexConf
       flexify source
     when nil
       if File.exists?('config.yml')
-        initialize('config.yml', :local => 'config_local.yml')
+        initialize('config.yml', :local => 'config_local.yml', :environment => true)
       else
         raise ArgumentError, "FlexConf can't load: no configuration was given and there is no config.yml file to default to."  
       end
@@ -80,6 +81,7 @@ class FlexConf
     @data.has_key? normalize_key(key)
   end
   
+  # Calls Hash#each on the underlying data structure.
   def_delegator(:@data, :each)
   
   protected
@@ -125,6 +127,12 @@ class FlexConf
   def handle_overrides(source_file, options={})
     local_override(source_file, options[:local]) if options[:local]
     hash_override(options[:override]) if options[:override]
+    if options[:environment].respond_to?(:each)
+      env_subset = ENV.select {|k,v| options[:environment].include? k}
+      environment_override(env_subset, true)
+    elsif options[:environment] == true
+      environment_override(ENV, false)
+    end
   end
   
   def local_override(source_file, local)
@@ -134,6 +142,38 @@ class FlexConf
   
   def hash_override(hash)
     flexify hash
+  end
+  
+  
+  # Turn 'THIS_LONG__ENVIRONMENT__PATH' to [:this_long, :environment, :path]
+  def normalize_envvar(name)
+    name.downcase.split('__').map {|e| e.to_sym}
+  end
+  
+  def get_path(root, names, create_path=false)
+    this, remaining = names.first, names[1..-1]
+    if remaining.empty?
+      root
+    elsif root[this].kind_of?(FlexConf)
+      get_path(root[this], remaining, create_path)
+    elsif create_path and !root.has_key?(this)
+      root[this] = FlexConf.new({}) # Create an empty stub for the path
+      get_path(root[this], remaining, true)
+    else  # The node exists and isn't a FlexConf, or create_path is false
+      false
+    end
+  end
+  
+  # Override from a provided hash of environment variables. Create new paths
+  # or new values only if create=true.
+  def environment_override(env, create_key=false)
+    env.each do |key, value|
+      flexvar = normalize_envvar(key)  # Get an array of symbols representing the path
+      if data_path = get_path(@data, flexvar, create_key)
+        data_key = flexvar[-1]
+        data_path[data_key] = value if data_path.has_key?(data_key) or create_key
+      end
+    end
   end
   
   def scoped(data, scope)

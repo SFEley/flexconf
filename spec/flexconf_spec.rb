@@ -61,6 +61,11 @@ describe FlexConf do
         @this[key].should == value
       end
     end
+    
+    it "is enumerable" do
+      @this.count.should > 0
+      @this.min.should == [:'7', 'seven']
+    end
   end
   
   describe "nesting" do
@@ -164,6 +169,7 @@ describe FlexConf do
       ENV['NEST__JOO'] = 'nipper'
       ENV['HAPPY'] = 'go lucky'
       ENV['ZOO'] = '97'
+      ENV['YOO'] = 'know who'
     end
     
     describe "stated as an array" do
@@ -172,7 +178,7 @@ describe FlexConf do
       end
       
       it "overrides existing values" do
-        @this.zoo.should == 97
+        @this.zoo.should == '97'
       end
       
       it "creates new values" do
@@ -188,11 +194,36 @@ describe FlexConf do
       end
     end
     
+    describe "automatically pulled with :environment => true" do
+      before(:each) do
+        @this = FlexConf.new('config.yml', :environment => true) 
+      end
+      
+      it "overrides existing values" do
+        @this.foo.should == 'harrumph'
+      end
+      
+      it "does NOT create new values" do
+        @this.should_not have_key(:happy)
+      end
+      
+      it "overrides nested values" do
+        @this[:nest][:joo].should == 'nipper'
+      end
+    end
+    
+    describe "by default" do
+      it "overrides local overrides from the environment" do
+        @this.yoo.should == 'know who'
+      end
+    end
+    
     after(:all) do
       ENV['FOO'] = nil
       ENV['NEST__JOO'] = nil
       ENV['HAPPY'] = nil
       ENV['ZOO'] = nil
+      ENV['YOO'] = nil
     end
   end
   
