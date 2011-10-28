@@ -41,10 +41,8 @@ describe FlexConf do
       @this[:boo].should == 'far'
     end
     
-    it "always takes the last value in the event of name collisions" do
-      @this['zoo'].should == 'yak'
-      @this[:zoo].should == 'yak'
-      @this.zoo.should == 'yak'
+    it "always keeps a consistent value in the event of name collisions" do
+      @this['zoo'].should == @this[:zoo]
     end
     
     it "knows when it has a key" do
