@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Stephen Eley"]
   s.email       = ["sfeley@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{Simple but flexible YAML-based configuration management}
+  s.summary     = %q{Simple, flexible YAML- or Ruby-based configuration management}
   s.description = <<-END
 FlexConf is a simple configuration utility that does its job and gets
 out of your way. It reads settings from a hash or YAML file ('config.yml' by default)

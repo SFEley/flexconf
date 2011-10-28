@@ -188,6 +188,15 @@ If the Rake task is using a FlexConf anywhere with the `:environment` option set
   sure you don't have any top-level key names that may collide with common
   Unix names.
 
+## Support and Such ##
+
+Documentation can be found at the [usual RDoc.info](http://rdoc.info/github/SFEley/flexconf/master) spot.
+
+If you have questions, problems, or suggestions please start by leaving an Issue here, but feel free to email me at <sfeley@gmail.com> if you don't get a timely response.  I'm sporadic about staying on top of my Github stuff, but I'm trying to get better about it.
+
+I encourage pull requests, forks, etc. There's probably more that could be done with this. (But not _much_ more, lest we lose the "simple" part.)
+
+FlexConf is licensed under the [Don't Be a Dick](http://dbad-license.org) license, v0.3. The specific license for the project can be found [here](http://github.com/SFEley/flexconf/blob/master/LICENSE.md). (In brief: do anything you want with this, so long as you aren't a dick about it.)
 
 
 
