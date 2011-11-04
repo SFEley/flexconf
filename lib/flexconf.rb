@@ -82,7 +82,7 @@ class FlexConf
   end
   
   # Calls Hash#each on the underlying data structure.
-  def_delegator(:@data, :each)
+  def_delegators(:@data, :each, :keys, :values, :to_hash)
   
   protected
   def_delegator(:@data, :[]=)   # Needed to merge override data

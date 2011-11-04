@@ -63,6 +63,18 @@ describe FlexConf do
     it "is enumerable" do
       @this.count.should > 0
     end
+    
+    it "can return its keys" do
+      @this.keys.should include(:zoo, :this_file, :nest)
+    end
+    
+    it "can return its values" do
+      @this.values.should include("far", 0.5, 'seven')
+    end
+    
+    it "can return itself as a hash" do
+      @this.to_hash.keys.should == @this.keys
+    end
   end
   
   describe "nesting" do
@@ -76,6 +88,12 @@ describe FlexConf do
     
     it "can use arbitrary call styles" do
       @this.nest[:renest].bar.should == 'foofoo'
+    end
+    
+    it "can return nested hashes" do
+      @this.development.to_hash.should == {:foo => 'dev-fu',
+        :boo => 'Chicken Boo',
+        :yoo => 'yuh?'}
     end
   end
     
