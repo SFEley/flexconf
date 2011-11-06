@@ -182,6 +182,6 @@ class FlexConf
   end
   
   def method_missing(name, *args, &block)
-    self[name] or super
+    self.has_key?(name) ? self[name] : super
   end
 end

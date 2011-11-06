@@ -6,6 +6,7 @@ local_file: 'none'
 foo: :bar     # Ordinary string key
 7: 'seven'    # Non-string key
 :boo: 'far'   # Symbol key
+sky_is_purple: false  # Test method calls on false values
 
 # Name collisions
 'zoo': 'ostrich'

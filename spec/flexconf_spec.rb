@@ -21,6 +21,10 @@ describe FlexConf do
       @this.foo.should == :bar
     end
     
+    it "can read 'false' values as method calls" do
+      @this.sky_is_purple.should == false
+    end
+    
     it "can read non-string keys" do
       @this[7].should == 'seven'
     end

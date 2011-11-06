@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = "flexconf"
-  s.version     = "0.2.0"
+  s.version     = "0.2.1"
   s.authors     = ["Stephen Eley"]
   s.email       = ["sfeley@gmail.com"]
   s.homepage    = ""
